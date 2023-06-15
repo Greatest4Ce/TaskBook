@@ -1,0 +1,88 @@
+{
+    "tasks": [
+        {
+            "status": "active",
+            "taskText": "Купить хлеб",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить молоко",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить хлеб",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить молоко",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить хлеб",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить молоко",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить хлеб",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить молоко",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить хлеб",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить молоко",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить хлеб",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить молоко",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить хлеб",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        },
+        {
+            "status": "active",
+            "taskText": "Купить молоко",
+            "priority": "high",
+            "deadline": "12.12.2023"
+        }
+    ]
+}
