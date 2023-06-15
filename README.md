@@ -10,8 +10,10 @@
 - Добавление новой заметки: для создания новой заметки вы можете нажать на кнопку «+» или нажать на поле «новое» в конце списка. Далее вы перейдете на страницу для создания задачи, в которой обязательным для сохранения задачи является поле для текста.
 - Также, вы в любой момент можете редактировать задачу. Для это тапните на задачу и перейдите в окно редактирования, в котором вы сможете поменять интересующие вас поля.
 
-# Интерфейс приложения:<img width="361" alt<img width="361" alt="Снимок экрана 2023-06-16 в 00 01 37" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/01fb5b99-a834-43e3-85a4-024e719d721c">
-="Снимок экрана 2023-06-15 в 23 59 17" src="https://github.com/Greatest4Ce/to<img width="361" alt="Снимок экрана 2023-06-16 в 00 01 27" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/d00525e0-fc4e-4eaa-b878-0f1755c70009">
-DoListY/assets/108977645/a490c35e-c8c3-4237-af26-cb984666714c"><img width="361" alt="Снимок экрана 2023-06-15 в 23 59 23" src="https://github.com/Grea<img width="361" alt="Снимок экрана 2023-06-15 в 23 59 32" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/a8c13836-0cd7-4707-b6ba-0fb838b99c66">
-test4Ce/toDoListY/assets/108977645/985e754e-c6ba-4afe-9887-68a4fabc7afd">
+# Интерфейс приложения:
 
+<img width="361" alt="Снимок экрана 2023-06-15 в 23 59 17" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/1e75ba07-57f4-4891-8aee-add8ec50765f">
+<img width="361" alt="Снимок экрана 2023-06-15 в 23 59 23" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/b44be221-0ee8-4ce0-b83f-bd05396cf856">
+<img width="361" alt="Снимок экрана 2023-06-15 в 23 59 32" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/0d15d46b-729b-4f97-8c1c-5050db71ab32">
+<img width="361" alt="Снимок экрана 2023-06-16 в 00 01 27" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/81b393ec-48f4-44ad-92e5-4a56d2b270ef">
+<img width="361" alt="Снимок экрана 2023-06-16 в 00 01 37" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/6e214321-fdcc-41cb-9811-349d7aab2f33">
