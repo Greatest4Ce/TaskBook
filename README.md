@@ -17,3 +17,19 @@
 <img width="361" alt="Снимок экрана 2023-06-15 в 23 59 32" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/0d15d46b-729b-4f97-8c1c-5050db71ab32">
 <img width="361" alt="Снимок экрана 2023-06-16 в 00 01 27" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/81b393ec-48f4-44ad-92e5-4a56d2b270ef">
 <img width="361" alt="Снимок экрана 2023-06-16 в 00 01 37" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/6e214321-fdcc-41cb-9811-349d7aab2f33">
+
+# Использованные зависимости
+'''dart
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.5 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+  provider: ^6.0.5
