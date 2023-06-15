@@ -28,7 +28,7 @@ class CustomTextTheme {
   static const TextStyle subhead = TextStyle(
     fontFamily: 'Roboto',
     color: Color(0x30000000),
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w600,
     fontSize: 14,
   );
 }

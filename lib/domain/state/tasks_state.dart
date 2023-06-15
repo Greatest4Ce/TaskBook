@@ -10,7 +10,7 @@ class TasksState with ChangeNotifier {
         status: 'active',
         taskText: 'Купить молоко',
         priority: 'Низкий',
-        deadline: '10.12.2023'),
+        deadline: ''),
     TaskModel(
         id: '2',
         status: 'done',
@@ -27,14 +27,13 @@ class TasksState with ChangeNotifier {
         id: '4',
         status: 'active',
         taskText:
-            'Купить молоко sdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdssdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfds',
+            'Купить молоко, хлеб, конфеты, молоко, хлеб, конфеты, молоко, хлеб, конфеты, молоко, хлеб, конфеты, молоко, хлеб, конфеты',
         priority: 'Нет',
         deadline: '10.12.2023'),
     TaskModel(
         id: '5',
         status: 'active',
-        taskText:
-            'Купить молоко sdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfds',
+        taskText: 'Купить молоко ',
         priority: 'Низкий',
         deadline: '10.12.2023'),
     TaskModel(
@@ -52,14 +51,13 @@ class TasksState with ChangeNotifier {
     TaskModel(
         id: '8',
         status: 'active',
-        taskText:
-            'Купить молоко sdfdssdfdsfdsfdsfdsfdsfdsfdsfdsfdsdfdsfdsfdsfdsfdsfdsfdsfdsfdfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfds',
+        taskText: 'Купить молоко',
         priority: 'Низкий',
         deadline: '10.12.2023'),
     TaskModel(
         id: '9',
         status: 'done',
-        taskText: 'Купить хлеб ',
+        taskText: 'Купить хлеб',
         priority: 'Низкий',
         deadline: ''),
     TaskModel(
