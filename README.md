@@ -19,7 +19,8 @@
 <img width="361" alt="Снимок экрана 2023-06-16 в 00 01 37" src="https://github.com/Greatest4Ce/toDoListY/assets/108977645/6e214321-fdcc-41cb-9811-349d7aab2f33">
 
 # Использованные зависимости
-'''dart
+'''python
+
 version: 1.0.0+1
 
 environment:
