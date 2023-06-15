@@ -1,5 +1,7 @@
 # TaskBook - приложение для контроля ваших задач!!!
-![appstore](https://github.com/Greatest4Ce/TaskBook/assets/108977645/90538418-8476-4983-ad67-062c2163788c)
+
+![appstore — малый размер](https://github.com/Greatest4Ce/TaskBook/assets/108977645/389f9fb1-d7f9-4ef8-899d-9eaebd267642)
+
 
 ## Скачать приложение
 
