@@ -35,3 +35,12 @@ dependencies:
   intl: ^0.17.0
   provider: ^6.0.5
   ```
+# Файловая структура:
+
+```dart
+  - lib
+    - presentation
+      - screens // Страницы
+      - feature // Виджеты относящиеся к странице
+      - style // Стили, темы, цвета
+```
