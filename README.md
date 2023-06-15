@@ -69,4 +69,31 @@ TaskModel
       required this.deadline});
 }
 ```
+Сохранение изменений задания
 
+```
+void savetask(id) {
+    _tasks[_tasks.indexWhere((e) => e.id == id)] = _task;
+    notifyListeners();
+    dev.log('Сохранены изменения в задании с id: $id');
+  }
+```  
+
+MaterialApp
+
+```
+MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('ru', 'RU')],
+      themeMode: ThemeMode.light,
+      theme: themes.lightTheme,
+      darkTheme: themes.darkTheme,
+      initialRoute: RouteNames.home,
+      routes: RoutesBuilder.routes,
+      navigatorKey: NavigationManager.instance.key,
+    );
+```    
