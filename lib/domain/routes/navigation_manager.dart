@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
-import 'package:to_do_list_new/domain/routes/navigation_observer.dart';
+import 'package:to_do_list_new/domain/routes/navigation_logger.dart';
 import 'package:to_do_list_new/domain/routes/route_names.dart';
+
 
 class NavigationManager {
   NavigationManager._();
@@ -25,5 +27,9 @@ class NavigationManager {
 
   void backHome() {
     _navigator.popUntil(ModalRoute.withName(RouteNames.home));
+  }
+
+  void navigateToHome() {
+    _navigator.pushReplacementNamed(RouteNames.home);
   }
 }

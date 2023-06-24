@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_new/presentation/screens/create_task_screen.dart';
+import 'package:to_do_list_new/S.dart';
+import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
@@ -9,14 +10,12 @@ class NewTaskWIdget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const CreateTaskScreen())),
+      onTap: () => NavigationManager.instance.openTaskScreen(),
       title: Text(
-        'Новое',
+        S.of(context).get("new"),
         style: CustomTextTheme.body.copyWith(color: LightColors.gray),
       ),
-      tileColor: LightColors.white,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 52, vertical: 14),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 52, vertical: 0),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/icons.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
+// ignore: must_be_immutable
 class TaskInfoAppBar extends AppBar {
   void Function() backOnPressed;
   void Function() saveOnPressed;
@@ -10,8 +11,8 @@ class TaskInfoAppBar extends AppBar {
       {Key? key, required this.backOnPressed, required this.saveOnPressed})
       : super(
             key: key,
-            iconTheme: const IconThemeData(color: Colors.black),
-            elevation: 4,
+            iconTheme: const IconThemeData(color: Colors.red),
+            elevation: 0,
             leading: IconButton(
                 splashRadius: 20,
                 icon: CustomIcons.close,

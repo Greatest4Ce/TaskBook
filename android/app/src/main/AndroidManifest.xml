@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.to_do_list_new">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="TaskBook"
         android:name="${applicationName}"

@@ -18,7 +18,7 @@ class CustomIcons {
     image: AssetImage(
       'assets/icons/close.png',
     ),
-    color: LightColors.labelPrimary,
+    color: LightColors.gray,
     height: 20,
     width: 20,
   );
@@ -30,7 +30,7 @@ class CustomIcons {
     image: AssetImage(
       'assets/icons/info_outline.png',
     ),
-    color: LightColors.labelTerritory,
+    color: LightColors.gray,
   );
   static const Image visibilityoff = Image(
     image: AssetImage('assets/icons/visibility_off.png'),

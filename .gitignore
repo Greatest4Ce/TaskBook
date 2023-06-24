@@ -3,3 +3,5 @@
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
+.vscode
+.DS_store
