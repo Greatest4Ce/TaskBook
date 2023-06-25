@@ -8,7 +8,7 @@ import '../../../domain/state/tasks_state_mobx.dart';
 import '../../../main.dart';
 
 class PriorityWidget extends StatefulWidget {
-  final String id;
+  final id;
   const PriorityWidget({Key? key, required this.id}) : super(key: key);
 
   @override

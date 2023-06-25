@@ -9,7 +9,7 @@ import '../../../domain/state/tasks_state_mobx.dart';
 import '../../../main.dart';
 
 class DeadlinePicker extends StatefulWidget {
-  final String id;
+  final id;
   const DeadlinePicker({Key? key, required this.id}) : super(key: key);
 
   @override

@@ -5,7 +5,7 @@ import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
 import '../../../main.dart';
 
 class TaskTextField extends StatefulWidget {
-  final String id;
+  final id;
   const TaskTextField({Key? key, required this.id}) : super(key: key);
 
   @override
