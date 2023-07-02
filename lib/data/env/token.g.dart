@@ -1,11 +1,11 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'env.dart';
+part of 'token.dart';
 
 // **************************************************************************
 // EnviedGenerator
 // **************************************************************************
 
-class _Env {
+class _Token {
   static const String token = 'underoxidise';
 }

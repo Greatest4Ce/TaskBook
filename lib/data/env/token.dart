@@ -1,9 +1,9 @@
 import 'package:envied/envied.dart';
 
-part 'env.g.dart';
+part 'token.g.dart';
 
 @Envied(path: '.env')
-abstract class Env {
+abstract class Token {
   @EnviedField(varName: 'TOKEN')
-  static const String token = _Env.token;
+  static const String token = _Token.token;
 }

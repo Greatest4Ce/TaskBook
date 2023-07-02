@@ -40,7 +40,6 @@ abstract class TasksStateBase with Store {
 
   @observable
   TaskModel task = TaskModel(
-      localOnly: true,
       id: '',
       done: false,
       text: '',
@@ -93,10 +92,9 @@ abstract class TasksStateBase with Store {
 
   @action
   void saveTask(id) {
-    task.changedAt = DateTime.now().toUtc().millisecondsSinceEpoch;
+    task.changedAt = DateTime.now().toUtc();
     _tasks[_tasks.indexWhere((e) => e.id == id)] = task;
     if (hasConnection) {
-      task.localOnly = false;
       tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)]);
       localTasksRepository
           .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
@@ -114,7 +112,6 @@ abstract class TasksStateBase with Store {
   @action
   void disposeTask() {
     task = TaskModel(
-        localOnly: true,
         id: '',
         done: false,
         text: '',
@@ -143,20 +140,28 @@ abstract class TasksStateBase with Store {
   @action
   void markAsDone(id) {
     _tasks[_tasks.indexWhere((e) => e.id == id)].done = true;
-    hasConnection
-        ? tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)])
-        : localTasksRepository
-            .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    if (hasConnection) {
+      tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)]);
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    } else {
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    }
     doneCounter++;
   }
 
   @action
   void markAsNotDone(id) {
     _tasks[tasks.indexWhere((e) => e.id == id)].done = false;
-    hasConnection
-        ? tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)])
-        : localTasksRepository
-            .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    if (hasConnection) {
+      tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)]);
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    } else {
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    }
     doneCounter--;
   }
 
@@ -165,8 +170,11 @@ abstract class TasksStateBase with Store {
     if (_tasks[_tasks.indexWhere((e) => e.id == id)].done == true) {
       doneCounter--;
     }
-    hasConnection
-        ? tasksRepository.deleteTask(id)
-        : localTasksRepository.localDeleteTask(id);
+    if (hasConnection) {
+      tasksRepository.deleteTask(id);
+      localTasksRepository.localDeleteTask(id);
+    } else {
+      localTasksRepository.localDeleteTask(id);
+    }
   }
 }
