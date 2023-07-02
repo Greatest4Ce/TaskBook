@@ -12,9 +12,9 @@ class TaskBody {
       "deadline": element.deadline?.toUtc().millisecondsSinceEpoch,
       "done": element.done,
       "color": null,
-      "created_at": element.createdAt,
-      "changed_at": element.changedAt,
-      "last_updated_by": '${element.lastUpdatedBy}'
+      "created_at": element.createdAt.toUtc().millisecondsSinceEpoch,
+      "changed_at": element.changedAt.toUtc().millisecondsSinceEpoch,
+      "last_updated_by": element.lastUpdatedBy
     };
   }
 }

@@ -3,7 +3,7 @@ import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
 import 'package:to_do_list_new/presentation/features/task_info/deadline_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/priority_widget.dart';
-import 'package:to_do_list_new/presentation/features/task_info/tast_textfield_widget.dart';
+import 'package:to_do_list_new/presentation/features/task_info/task_textfield_widget.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 

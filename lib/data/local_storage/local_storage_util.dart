@@ -24,15 +24,14 @@ class LocalStorageUtil {
     final isar = await _isarGetter;
     final items = await isar.taskModelIsars.where().findAll();
     final result = List.of(items.map((item) => TaskModel(
-        localOnly: item.localOnly ?? false,
         id: item.taskId.toString(),
         done: item.done ?? false,
         text: item.text ?? '',
         importance: item.importance ?? 'basic',
         deadline: item.deadline,
-        createdAt: item.createdAt ?? 0,
-        changedAt: item.changedAt ?? 0,
-        lastUpdatedBy: item.lastUpdatedBy ?? 0)));
+        createdAt: item.createdAt!,
+        changedAt: item.changedAt!,
+        lastUpdatedBy: item.lastUpdatedBy ?? '145')));
     return result;
   }
 

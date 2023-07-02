@@ -4,9 +4,9 @@ class ApiTask {
   final String importance;
   DateTime? deadline;
   final bool done;
-  final int createdAt;
-  final int changedAt;
-  var lastUpdatedBy;
+  final DateTime createdAt;
+  final DateTime changedAt;
+  String lastUpdatedBy;
   ApiTask.allFromApi(Map<String, dynamic> map)
       : id = map["id"],
         text = map["text"],
@@ -17,8 +17,12 @@ class ApiTask {
               )
             : null,
         done = map["done"],
-        createdAt = map["created_at"],
-        changedAt = map["changed_at"],
+        createdAt = DateTime.fromMillisecondsSinceEpoch(
+          map["created_at"],
+        ),
+        changedAt = DateTime.fromMillisecondsSinceEpoch(
+          map["changed_at"],
+        ),
         lastUpdatedBy = map["last_updated_by"];
   ApiTask.singleFromApi(Map<String, dynamic> map)
       : id = map["element"]["id"],

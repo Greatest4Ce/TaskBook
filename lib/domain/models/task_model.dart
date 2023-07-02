@@ -1,9 +1,4 @@
-import 'package:isar/isar.dart';
-
-@collection
 class TaskModel {
-  Id get isarId => fastHash(id);
-
   String id;
   bool done;
   String text;
@@ -11,7 +6,7 @@ class TaskModel {
   DateTime? deadline;
   DateTime createdAt;
   DateTime changedAt;
-  int lastUpdatedBy;
+  String lastUpdatedBy;
   TaskModel(
       {required this.id,
       required this.done,
@@ -30,7 +25,7 @@ class TaskModel {
     DateTime? deadline,
     DateTime? createdAt,
     DateTime? changedAt,
-    int? lastUpdatedBy,
+    String? lastUpdatedBy,
   }) {
     return TaskModel(
         id: id ?? this.id,

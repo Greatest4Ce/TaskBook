@@ -4,15 +4,14 @@ part 'isar_model.g.dart';
 
 @Collection()
 class TaskModelIsar {
-  Id id = Isar.autoIncrement;
+  Id isarId = Isar.autoIncrement;
 
-  bool? localOnly;
   String? taskId;
   bool? done;
   String? text;
   String? importance;
   DateTime? deadline;
-  int? createdAt;
-  int? changedAt;
-  int? lastUpdatedBy;
+  DateTime? createdAt;
+  DateTime? changedAt;
+  String? lastUpdatedBy;
 }

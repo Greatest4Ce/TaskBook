@@ -9,8 +9,8 @@ class TaskMapper {
         text: task.text.toString(),
         importance: task.importance,
         deadline: task.deadline,
-        createdAt: DateTime.fromMillisecondsSinceEpoch(task.createdAt),
-        changedAt: DateTime.fromMillisecondsSinceEpoch(task.changedAt),
-        lastUpdatedBy: int.parse(task.lastUpdatedBy));
+        createdAt: task.createdAt,
+        changedAt: task.createdAt,
+        lastUpdatedBy: task.lastUpdatedBy);
   }
 }

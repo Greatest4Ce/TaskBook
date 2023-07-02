@@ -45,9 +45,9 @@ abstract class TasksStateBase with Store {
       text: '',
       importance: 'basic',
       deadline: null,
-      createdAt: 0,
-      changedAt: 0,
-      lastUpdatedBy: 145);
+      createdAt: DateTime.now(),
+      changedAt: DateTime.now(),
+      lastUpdatedBy: '145');
 
   @action
   Future<void> getTasks() async {
@@ -79,8 +79,8 @@ abstract class TasksStateBase with Store {
   @action
   void saveNewTask() {
     task.id = const Uuid().v1().toString();
-    task.createdAt = DateTime.now().toUtc().millisecondsSinceEpoch;
-    task.changedAt = DateTime.now().toUtc().millisecondsSinceEpoch;
+    task.createdAt = DateTime.now();
+    task.changedAt = DateTime.now();
     _tasks.add(task);
     if (hasConnection) {
       tasksRepository.postTask(task.id, task);
@@ -117,9 +117,9 @@ abstract class TasksStateBase with Store {
         text: '',
         importance: 'basic',
         deadline: null,
-        createdAt: 0,
-        changedAt: 0,
-        lastUpdatedBy: 145);
+        createdAt: DateTime.now(),
+        changedAt: DateTime.now(),
+        lastUpdatedBy: '145');
   }
 
   @action
