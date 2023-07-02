@@ -133,9 +133,9 @@ class TaskTileWidget extends StatelessWidget {
           ),
         ),
       ),
-      trailing: Column(
+      trailing: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: const [CustomIcons.infooutline],
+        children: [CustomIcons.infooutline],
       ),
     );
   }

@@ -47,13 +47,18 @@ const TaskModelIsarSchema = CollectionSchema(
       name: r'lastUpdatedBy',
       type: IsarType.long,
     ),
-    r'taskId': PropertySchema(
+    r'localOnly': PropertySchema(
       id: 6,
+      name: r'localOnly',
+      type: IsarType.bool,
+    ),
+    r'taskId': PropertySchema(
+      id: 7,
       name: r'taskId',
       type: IsarType.string,
     ),
     r'text': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'text',
       type: IsarType.string,
     )
@@ -111,8 +116,9 @@ void _taskModelIsarSerialize(
   writer.writeBool(offsets[3], object.done);
   writer.writeString(offsets[4], object.importance);
   writer.writeLong(offsets[5], object.lastUpdatedBy);
-  writer.writeString(offsets[6], object.taskId);
-  writer.writeString(offsets[7], object.text);
+  writer.writeBool(offsets[6], object.localOnly);
+  writer.writeString(offsets[7], object.taskId);
+  writer.writeString(offsets[8], object.text);
 }
 
 TaskModelIsar _taskModelIsarDeserialize(
@@ -129,8 +135,9 @@ TaskModelIsar _taskModelIsarDeserialize(
   object.id = id;
   object.importance = reader.readStringOrNull(offsets[4]);
   object.lastUpdatedBy = reader.readLongOrNull(offsets[5]);
-  object.taskId = reader.readStringOrNull(offsets[6]);
-  object.text = reader.readStringOrNull(offsets[7]);
+  object.localOnly = reader.readBoolOrNull(offsets[6]);
+  object.taskId = reader.readStringOrNull(offsets[7]);
+  object.text = reader.readStringOrNull(offsets[8]);
   return object;
 }
 
@@ -154,8 +161,10 @@ P _taskModelIsarDeserializeProp<P>(
     case 5:
       return (reader.readLongOrNull(offset)) as P;
     case 6:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 7:
+      return (reader.readStringOrNull(offset)) as P;
+    case 8:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -791,6 +800,34 @@ extension TaskModelIsarQueryFilter
   }
 
   QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterFilterCondition>
+      localOnlyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'localOnly',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterFilterCondition>
+      localOnlyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'localOnly',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterFilterCondition>
+      localOnlyEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'localOnly',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterFilterCondition>
       taskIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1184,6 +1221,19 @@ extension TaskModelIsarQuerySortBy
     });
   }
 
+  QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterSortBy> sortByLocalOnly() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localOnly', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterSortBy>
+      sortByLocalOnlyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localOnly', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterSortBy> sortByTaskId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taskId', Sort.asc);
@@ -1301,6 +1351,19 @@ extension TaskModelIsarQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterSortBy> thenByLocalOnly() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localOnly', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterSortBy>
+      thenByLocalOnlyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localOnly', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModelIsar, TaskModelIsar, QAfterSortBy> thenByTaskId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taskId', Sort.asc);
@@ -1366,6 +1429,12 @@ extension TaskModelIsarQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskModelIsar, TaskModelIsar, QDistinct> distinctByLocalOnly() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'localOnly');
+    });
+  }
+
   QueryBuilder<TaskModelIsar, TaskModelIsar, QDistinct> distinctByTaskId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1422,6 +1491,12 @@ extension TaskModelIsarQueryProperty
   QueryBuilder<TaskModelIsar, int?, QQueryOperations> lastUpdatedByProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastUpdatedBy');
+    });
+  }
+
+  QueryBuilder<TaskModelIsar, bool?, QQueryOperations> localOnlyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'localOnly');
     });
   }
 

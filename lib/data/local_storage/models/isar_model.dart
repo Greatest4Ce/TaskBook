@@ -6,6 +6,7 @@ part 'isar_model.g.dart';
 class TaskModelIsar {
   Id id = Isar.autoIncrement;
 
+  bool? localOnly;
   String? taskId;
   bool? done;
   String? text;

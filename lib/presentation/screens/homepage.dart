@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
-import 'package:to_do_list_new/S.dart';
+import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
 import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
 import 'package:to_do_list_new/main.dart';

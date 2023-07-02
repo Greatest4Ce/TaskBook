@@ -1,4 +1,5 @@
 class TaskModel {
+  bool localOnly;
   String id;
   bool done;
   String text;
@@ -6,9 +7,10 @@ class TaskModel {
   DateTime? deadline;
   int createdAt;
   int changedAt;
-  var lastUpdatedBy;
+  int lastUpdatedBy;
   TaskModel(
-      {required this.id,
+      {required this.localOnly,
+      required this.id,
       required this.done,
       required this.text,
       required this.importance,

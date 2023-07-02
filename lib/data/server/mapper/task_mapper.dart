@@ -4,6 +4,8 @@ import '../models/api_task.dart';
 class TaskMapper {
   static TaskModel fromJson(ApiTask task) {
     return TaskModel(
+        localOnly:
+            false, // Получение идет с API, потому автоматически прокидывается false
         id: task.id.toString(),
         done: task.done,
         text: task.text.toString(),
@@ -11,6 +13,6 @@ class TaskMapper {
         deadline: task.deadline,
         createdAt: task.createdAt,
         changedAt: task.createdAt,
-        lastUpdatedBy: task.lastUpdatedBy);
+        lastUpdatedBy: int.parse(task.lastUpdatedBy));
   }
 }

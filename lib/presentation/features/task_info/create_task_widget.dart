@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_new/S.dart';
+import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
 import 'package:to_do_list_new/presentation/features/task_info/deadline_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/priority_widget.dart';

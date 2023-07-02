@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_new/S.dart';
+import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
 
 import '../../../main.dart';

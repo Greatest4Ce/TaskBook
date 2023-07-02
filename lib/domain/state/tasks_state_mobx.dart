@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:to_do_list_new/domain/repository/locals_tasks_repository.dart';
 import 'package:to_do_list_new/domain/repository/tasks_reporsitory.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
-import 'package:to_do_list_new/domain/state/connection.dart';
+import 'package:to_do_list_new/domain/state/connection_status.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../internal/dependencies/repository_module.dart';
@@ -18,11 +18,10 @@ abstract class TasksStateBase with Store {
   final TasksRepository tasksRepository = RepositoryModule.tasksRepository();
   final LocalTasksRepository localTasksRepository =
       RepositoryModule.localTasksRepository();
-  ConnectionStatusSingleton connectionStatus =
-      ConnectionStatusSingleton.getInstance();
+  final ConnectionStatus _connectionStatus = ConnectionStatus.getInstance();
 
   @computed
-  bool get hasConnection => connectionStatus.hasConnection;
+  bool get hasConnection => _connectionStatus.hasConnection;
 
   @observable
   ObservableList<TaskModel> _tasks = <TaskModel>[].asObservable();
@@ -41,6 +40,7 @@ abstract class TasksStateBase with Store {
 
   @observable
   TaskModel task = TaskModel(
+      localOnly: true,
       id: '',
       done: false,
       text: '',
@@ -56,7 +56,7 @@ abstract class TasksStateBase with Store {
     final data = hasConnection
         ? await tasksRepository.getTasks()
         : await localTasksRepository.getLocalTasks();
-    _tasks = data;
+    _tasks = ObservableList.of(data);
     log('Задачи переданы в ui');
     isLoading = false;
     initDoneCounter();
@@ -83,19 +83,27 @@ abstract class TasksStateBase with Store {
     task.createdAt = DateTime.now().toUtc().millisecondsSinceEpoch;
     task.changedAt = DateTime.now().toUtc().millisecondsSinceEpoch;
     _tasks.add(task);
-    hasConnection
-        ? tasksRepository.postTask(task.id, task)
-        : localTasksRepository.localSaveTask(task);
+    if (hasConnection) {
+      tasksRepository.postTask(task.id, task);
+      localTasksRepository.localSaveTask(task);
+    } else {
+      localTasksRepository.localSaveTask(task);
+    }
   }
 
   @action
   void saveTask(id) {
     task.changedAt = DateTime.now().toUtc().millisecondsSinceEpoch;
     _tasks[_tasks.indexWhere((e) => e.id == id)] = task;
-    hasConnection
-        ? tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)])
-        : localTasksRepository
-            .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    if (hasConnection) {
+      task.localOnly = false;
+      tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)]);
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    } else {
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    }
   }
 
   @action
@@ -106,6 +114,7 @@ abstract class TasksStateBase with Store {
   @action
   void disposeTask() {
     task = TaskModel(
+        localOnly: true,
         id: '',
         done: false,
         text: '',

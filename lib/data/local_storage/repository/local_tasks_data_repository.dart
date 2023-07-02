@@ -1,4 +1,3 @@
-import 'package:mobx/mobx.dart';
 import 'package:to_do_list_new/data/local_storage/local_storage_util.dart';
 import 'package:to_do_list_new/domain/models/task_model.dart';
 import 'package:to_do_list_new/domain/repository/locals_tasks_repository.dart';
@@ -9,8 +8,8 @@ class LocalTasksDataRepository extends LocalTasksRepository {
   LocalTasksDataRepository(this._localStorageUtil);
 
   @override
-  Future<ObservableList<TaskModel>> getLocalTasks() {
-    return _localStorageUtil.getTasksHistory();
+  Future<List<TaskModel>> getLocalTasks() {
+    return _localStorageUtil.getLocalTasks();
   }
 
   @override
@@ -29,7 +28,7 @@ class LocalTasksDataRepository extends LocalTasksRepository {
   }
 
   @override
-  Future<void> updateFromApi(dataFromApi) {
-    return _localStorageUtil.updateFromApi(dataFromApi: dataFromApi);
+  Future<void> updateLocalFromApi(data) {
+    return _localStorageUtil.updateFromApi(data: data);
   }
 }

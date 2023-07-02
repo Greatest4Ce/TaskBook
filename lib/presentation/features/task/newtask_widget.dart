@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_new/S.dart';
+import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
