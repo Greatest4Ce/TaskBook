@@ -24,17 +24,4 @@ class ApiTask {
           map["changed_at"],
         ),
         lastUpdatedBy = map["last_updated_by"];
-  ApiTask.singleFromApi(Map<String, dynamic> map)
-      : id = map["element"]["id"],
-        text = map["element"]["text"],
-        importance = map["element"]["importance"],
-        deadline = map["element"]["deadline"] != null
-            ? DateTime.fromMillisecondsSinceEpoch(
-                map["element"]["deadline"],
-              )
-            : null,
-        done = map["element"]["done"],
-        createdAt = map["element"]["created_at"],
-        changedAt = map["element"]["changed_at"],
-        lastUpdatedBy = map["element"]["last_updated_by"];
 }

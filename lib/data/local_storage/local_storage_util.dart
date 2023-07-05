@@ -35,7 +35,7 @@ class LocalStorageUtil {
     return result;
   }
 
-  Future<void> localSaveTask({required TaskModel task}) async {
+  Future<TaskModel> localSaveTask(TaskModel task) async {
     final isar = await _isarGetter;
     final isarTask = TaskModelIsar()
       ..taskId = task.id
@@ -49,9 +49,10 @@ class LocalStorageUtil {
     isar.writeTxn(() async {
       await isar.taskModelIsars.put(isarTask);
     });
+    return task;
   }
 
-  Future<void> localEditTask({required TaskModel task}) async {
+  Future<TaskModel> localEditTask(TaskModel task) async {
     final isar = await _isarGetter;
     final taskToEdit =
         await isar.taskModelIsars.filter().taskIdEqualTo(task.id).findFirst();
@@ -67,9 +68,10 @@ class LocalStorageUtil {
         await isar.taskModelIsars.put(taskToEdit);
       });
     }
+    return task;
   }
 
-  Future<void> localDeleteTask({required String id}) async {
+  Future<void> localDeleteTask(String id) async {
     final isar = await _isarGetter;
     isar.writeTxn(
       () async {
@@ -82,7 +84,7 @@ class LocalStorageUtil {
     log('Удалена задача с id: $id');
   }
 
-  Future<void> updateFromApi({required data}) async {
+  Future<List<TaskModel>> updateFromApi(data) async {
     List<TaskModel> tasks = [];
     final isar = await _isarGetter;
     await isar.writeTxn(() => isar.taskModelIsars.clear());
@@ -90,7 +92,8 @@ class LocalStorageUtil {
       tasks.add(TaskMapper.fromJson(ApiTask.allFromApi(e)));
     }
     for (var element in tasks) {
-      localSaveTask(task: element);
+      localSaveTask(element);
     }
+    return tasks;
   }
 }

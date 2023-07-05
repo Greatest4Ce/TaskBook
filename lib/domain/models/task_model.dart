@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 class TaskModel {
   String id;
   bool done;
@@ -37,4 +39,14 @@ class TaskModel {
         changedAt: changedAt ?? this.createdAt,
         lastUpdatedBy: lastUpdatedBy ?? this.lastUpdatedBy);
   }
+
+  TaskModel.create(
+    this.text, {
+    this.importance = 'basic',
+    this.deadline,
+    this.done = false,
+    required this.lastUpdatedBy,
+  })  : id = const Uuid().v1(),
+        createdAt = DateTime.now(),
+        changedAt = DateTime.now();
 }

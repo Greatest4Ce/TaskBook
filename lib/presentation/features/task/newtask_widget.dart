@@ -4,8 +4,8 @@ import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
-class NewTaskWIdget extends StatelessWidget {
-  const NewTaskWIdget({Key? key}) : super(key: key);
+class NewTaskWidget extends StatelessWidget {
+  const NewTaskWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

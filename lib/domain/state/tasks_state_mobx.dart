@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:mobx/mobx.dart';
 import 'package:to_do_list_new/domain/repository/locals_tasks_repository.dart';
 import 'package:to_do_list_new/domain/repository/tasks_reporsitory.dart';
@@ -22,6 +21,9 @@ abstract class TasksStateBase with Store {
 
   @computed
   bool get hasConnection => _connectionStatus.hasConnection;
+
+  // @computed
+  // String? get deviceId => _getId();
 
   @observable
   ObservableList<TaskModel> _tasks = <TaskModel>[].asObservable();
@@ -177,4 +179,17 @@ abstract class TasksStateBase with Store {
       localTasksRepository.localDeleteTask(id);
     }
   }
+
+  // @action
+  // Future<String?> _getId() async {
+  //   var deviceInfo = DeviceInfoPlugin();
+  //   if (Platform.isIOS) {
+  //     // import 'dart:io'
+  //     var iosDeviceInfo = await deviceInfo.iosInfo;
+  //     return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+  //   } else if (Platform.isAndroid) {
+  //     var androidDeviceInfo = await deviceInfo.androidInfo;
+  //     return androidDeviceInfo.id; // unique ID on Android
+  //   }
+  // }
 }

@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     final TasksState tasksState = getIt<TasksState>();
     return Scaffold(
         floatingActionButton: FloatingActionButton(
+            key: const Key("newTaskButton"),
             child: const Icon(Icons.add),
             onPressed: () {
               NavigationManager.instance.openTaskScreen();
@@ -50,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                                       child: CircularProgressIndicator(),
                                     )
                                   : tasksState.tasks == []
-                                      ? const NewTaskWIdget()
+                                      ? const NewTaskWidget()
                                       : Observer(
                                           builder: (_) => ListView.builder(
                                               padding:
@@ -66,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                                                       int index) {
                                                 return index ==
                                                         tasksState.tasks.length
-                                                    ? const NewTaskWIdget()
+                                                    ? const NewTaskWidget()
                                                     : TaskWidget(
                                                         id: tasksState
                                                             .tasks[index].id);

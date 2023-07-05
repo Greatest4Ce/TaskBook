@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_new/S.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
 import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
 import 'package:to_do_list_new/presentation/features/task_info/create_task_widget.dart';
@@ -13,24 +14,27 @@ class CreateTaskScreen extends StatelessWidget {
     final TasksState tasksState = getIt<TasksState>();
     bool newTask = tasksState.task.id == '';
     return Scaffold(
-      appBar: TaskInfoAppBar(backOnPressed: () {
-        tasksState.disposeTask();
-        NavigationManager.instance.pop();
-      }, saveOnPressed: () {
-        if (newTask == true) {
-          if (tasksState.task.text != '') {
-            NavigationManager.instance.navigateToHome();
-            tasksState.saveNewTask();
+      appBar: TaskInfoAppBar(
+          saveText: S.of(context).get("save"),
+          backOnPressed: () {
             tasksState.disposeTask();
-          } else {
-            null;
-          }
-        } else {
-          tasksState.saveTask(id);
-          tasksState.disposeTask();
-          NavigationManager.instance.navigateToHome();
-        }
-      }),
+            NavigationManager.instance.pop();
+          },
+          saveOnPressed: () {
+            if (newTask == true) {
+              if (tasksState.task.text != '') {
+                NavigationManager.instance.navigateToHome();
+                tasksState.saveNewTask();
+                tasksState.disposeTask();
+              } else {
+                null;
+              }
+            } else {
+              tasksState.saveTask(id);
+              tasksState.disposeTask();
+              NavigationManager.instance.navigateToHome();
+            }
+          }),
       body: CreateTaskWidget(id: id),
     );
   }

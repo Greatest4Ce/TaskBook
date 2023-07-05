@@ -5,10 +5,14 @@ import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
 // ignore: must_be_immutable
 class TaskInfoAppBar extends AppBar {
+  String saveText;
   void Function() backOnPressed;
   void Function() saveOnPressed;
   TaskInfoAppBar(
-      {Key? key, required this.backOnPressed, required this.saveOnPressed})
+      {Key? key,
+      required this.saveText,
+      required this.backOnPressed,
+      required this.saveOnPressed})
       : super(
             key: key,
             iconTheme: const IconThemeData(color: Colors.red),
@@ -31,7 +35,7 @@ class TaskInfoAppBar extends AppBar {
                   ),
                   onPressed: saveOnPressed,
                   child: Text(
-                    'Сохранить',
+                    saveText,
                     style: CustomTextTheme.button.copyWith(color: Colors.blue),
                   ))
             ]);

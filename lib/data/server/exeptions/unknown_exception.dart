@@ -1,6 +1,6 @@
 class UnknownException implements Exception {
   UnknownException();
-  static const String message = 'NotInternetException';
+  static const String message = 'NoInternetException';
   @override
   String toString() => message;
 }
