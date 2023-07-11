@@ -46,6 +46,7 @@ class _TaskTextFieldState extends State<TaskTextField> {
             },
             minLines: 3,
             maxLines: null,
+            controller: _textEditingController,
             style: Theme.of(context).textTheme.bodyMedium,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(

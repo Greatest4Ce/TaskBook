@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_new/S.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
 import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
 import 'package:to_do_list_new/presentation/features/task_info/create_task_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/app_bar.dart';
+import 'package:to_do_list_new/s.dart';
 import '../../main.dart';
 
 class CreateTaskScreen extends StatelessWidget {

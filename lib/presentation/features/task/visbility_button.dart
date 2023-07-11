@@ -11,23 +11,25 @@ class VisibilityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tasksState = getIt<TasksState>();
-    return Observer(
-      builder: (_) => tasksState.isLoading
-          ? const SizedBox()
-          : SizedBox(
-              height: 40,
-              width: 50,
-              child: IconButton(
-                  splashRadius: 3,
-                  onPressed: () {
-                    tasksState.changeVisibleAll();
-                  },
-                  icon: tasksState.tasks == []
-                      ? CustomIcons.visibility
-                      : tasksState.visibleAll
-                          ? CustomIcons.visibilityoff
-                          : CustomIcons.visibility),
-            ),
+    return SafeArea(
+      child: Observer(
+        builder: (_) => tasksState.isLoading
+            ? const SizedBox()
+            : SizedBox(
+                height: 40,
+                width: 50,
+                child: IconButton(
+                    splashRadius: 3,
+                    onPressed: () {
+                      tasksState.changeVisibleAll();
+                    },
+                    icon: tasksState.tasks == []
+                        ? CustomIcons.visibility
+                        : tasksState.visibleAll
+                            ? CustomIcons.visibilityoff
+                            : CustomIcons.visibility),
+              ),
+      ),
     );
   }
 }
