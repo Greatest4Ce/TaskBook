@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:to_do_list_new/S.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
-import 'package:to_do_list_new/domain/state/tasks_state.dart';
 import 'package:to_do_list_new/presentation/features/task_info/deadline_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/priority_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/tast_textfield_widget.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
+import '../../../domain/state/tasks_state_mobx.dart';
+import '../../../main.dart';
+
 class CreateTaskWidget extends StatelessWidget {
   final id;
-  const CreateTaskWidget({Key? key, this.id}) : super(key: key);
+  const CreateTaskWidget({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     bool newTask = id == null ? true : false;
+    final tasksState = getIt<TasksState>();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -55,14 +58,13 @@ class CreateTaskWidget extends StatelessWidget {
                     color: newTask ? LightColors.gray : LightColors.red,
                   ),
                   label: Text(
-                    'Удалить',
+                    S.of(context).get("delete"),
                     style: CustomTextTheme.body.copyWith(
                         color: newTask ? LightColors.gray : LightColors.red),
                   ),
                   onPressed: () {
                     NavigationManager.instance.backHome();
-                    Provider.of<TasksState>(context, listen: false)
-                        .deleteTask(id);
+                    tasksState.deleteTask(id);
                   }),
             )
           ],

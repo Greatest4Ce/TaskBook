@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do_list_new/S.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
-import 'package:to_do_list_new/domain/routes/navigation_observer.dart';
 import 'package:to_do_list_new/domain/routes/route_names.dart';
-import 'package:to_do_list_new/domain/state/tasks_state.dart';
-import 'package:to_do_list_new/presentation/screens/homepage.dart';
-
+import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
+import '../domain/routes/navigation_logger.dart';
 import '../presentation/styles/themes.dart';
 
 class App extends StatefulWidget {
@@ -18,30 +16,23 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final Themes themes = Themes();
-
-  @override
-  void initState() {
-    Provider.of<TasksState>(context, listen: false).initDoneCounter();
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    // Provider.of<TasksState>(context, listen: false).initVisibleList;
-    return MaterialApp(
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [Locale('ru', 'RU')],
-      themeMode: ThemeMode.light,
-      theme: themes.lightTheme,
-      darkTheme: themes.darkTheme,
-      initialRoute: RouteNames.home,
-      routes: RoutesBuilder.routes,
-      navigatorKey: NavigationManager.instance.key,
+    return MultiProvider(
+      providers: [Provider<TasksState>(create: (_) => TasksState())],
+      child: Consumer<TasksState>(
+        builder: (_, store, __) => MaterialApp(
+          localizationsDelegates: S.localizationsDelegates,
+          supportedLocales: S.supportedLocales,
+          navigatorObservers: [NavigationLogger()],
+          themeMode: ThemeMode.system,
+          theme: themes.lightTheme,
+          darkTheme: themes.darkTheme,
+          initialRoute: RouteNames.splashScreen,
+          routes: RoutesBuilder.routes,
+          navigatorKey: NavigationManager.instance.key,
+        ),
+      ),
     );
   }
 }

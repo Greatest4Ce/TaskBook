@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do_list_new/S.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
-import 'package:to_do_list_new/domain/state/tasks_state.dart';
+import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
+import 'package:to_do_list_new/main.dart';
 import 'package:to_do_list_new/presentation/features/task/newtask_widget.dart';
 import 'package:to_do_list_new/presentation/features/task/task_widget.dart';
 import 'package:to_do_list_new/presentation/features/task/visbility_button.dart';
-import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
+    final TasksState tasksState = getIt<TasksState>();
     return Scaffold(
         floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
@@ -20,31 +28,54 @@ class HomePage extends StatelessWidget {
             }),
         body: CustomScrollView(
           slivers: [
-            const SliverPersistentHeader(
-                pinned: true, delegate: MyHeaderDelegate()),
+            Observer(
+                builder: (_) => SliverPersistentHeader(
+                    pinned: true,
+                    delegate:
+                        MyHeaderDelegate(counter: tasksState.doneCounter))),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Card(
-                    margin: const EdgeInsets.all(0),
-                    child: ListView.builder(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        itemCount: context.watch<TasksState>().tasks.length + 1,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return index ==
-                                  context.watch<TasksState>().tasks.length
-                              ? const NewTaskWIdget()
-                              : TaskWidget(
-                                  id: Provider.of<TasksState>(context,
-                                          listen: false)
-                                      .tasks[index]
-                                      .id);
-                        }),
-                  ),
+                child: Observer(
+                  builder: (_) => tasksState.isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Card(
+                            margin: const EdgeInsets.all(0),
+                            child: Observer(
+                              builder: (context) => tasksState.isLoading
+                                  ? const Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : tasksState.tasks == []
+                                      ? const NewTaskWIdget()
+                                      : Observer(
+                                          builder: (_) => ListView.builder(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                              itemCount:
+                                                  tasksState.tasks.length + 1,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return index ==
+                                                        tasksState.tasks.length
+                                                    ? const NewTaskWIdget()
+                                                    : TaskWidget(
+                                                        id: tasksState
+                                                            .tasks[index].id);
+                                              }),
+                                        ),
+                            ),
+                          ),
+                        ),
                 ),
               ),
             )
@@ -54,8 +85,8 @@ class HomePage extends StatelessWidget {
 }
 
 class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
-  const MyHeaderDelegate();
-
+  int counter;
+  MyHeaderDelegate({required this.counter});
   @override
   Widget build(
     BuildContext context,
@@ -87,18 +118,27 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  'Мои дела',
+                  S.of(context).get("myTasks"),
                   style: TextStyle.lerp(
-                    CustomTextTheme.largeTitle,
-                    CustomTextTheme.title.copyWith(),
+                    Theme.of(context).textTheme.titleLarge,
+                    Theme.of(context).textTheme.titleLarge,
                     progress,
                   ),
                 ),
+                const SizedBox(
+                  height: 5,
+                ),
                 Text(
-                  'Выполнено - ${context.watch<TasksState>().doneCounter}',
+                  '${S.of(context).get("tasksDone")} - $counter',
                   style: TextStyle.lerp(
-                      CustomTextTheme.subhead.copyWith(fontSize: 16),
-                      CustomTextTheme.subhead.copyWith(fontSize: 0),
+                      Theme.of(context)
+                          .textTheme
+                          .labelMedium
+                          ?.copyWith(fontSize: 16),
+                      Theme.of(context)
+                          .textTheme
+                          .labelMedium
+                          ?.copyWith(fontSize: 0),
                       progress * 10),
                 ),
               ],

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:to_do_list_new/domain/state/tasks_state.dart';
+import 'package:to_do_list_new/S.dart';
+import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
+
+import '../../../main.dart';
 
 class TaskTextField extends StatefulWidget {
   final id;
-  const TaskTextField({Key? key, this.id}) : super(key: key);
+  const TaskTextField({Key? key, required this.id}) : super(key: key);
 
   @override
   State<TaskTextField> createState() => _TaskTextFieldState();
@@ -15,21 +17,19 @@ class _TaskTextFieldState extends State<TaskTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final TasksState tasksState = getIt<TasksState>();
     if (widget.id != null) {
-      if (context
-              .watch<TasksState>()
-              .tasks
-              .singleWhere((e) => e.id == widget.id,
-                  orElse: () => Provider.of<TasksState>(context).task)
-              // ignore: unnecessary_null_comparison
-              .taskText !=
+      if (tasksState.tasks
+              .singleWhere(
+                (e) => e.id == widget.id,
+              )
+              .text !=
           null) {
-        _textEditingController.text = context
-            .watch<TasksState>()
-            .tasks
-            .singleWhere((e) => e.id == widget.id,
-                orElse: () => Provider.of<TasksState>(context).task)
-            .taskText
+        _textEditingController.text = tasksState.tasks
+            .singleWhere(
+              (e) => e.id == widget.id,
+            )
+            .text
             .toString();
       } else {
         _textEditingController.text = '';
@@ -38,26 +38,27 @@ class _TaskTextFieldState extends State<TaskTextField> {
       null;
     }
     return Material(
-        borderRadius: const BorderRadius.all(const Radius.circular(8)),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
         elevation: 3,
         child: TextField(
             onEditingComplete: () {
-              Provider.of<TasksState>(context, listen: false)
-                  .changeText(_textEditingController.text);
+              tasksState.changeTextOfTask(_textEditingController.text);
               FocusScope.of(context).unfocus();
             },
             maxLines: null,
             controller: _textEditingController,
-            style: const TextStyle(color: Colors.black),
+            style: Theme.of(context).textTheme.bodyMedium,
             keyboardType: TextInputType.text,
-            decoration: const InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey),
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Theme.of(context).unselectedWidgetColor,
+              focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 0),
                   borderRadius: BorderRadius.all(Radius.circular(8))),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+              enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 0),
                   borderRadius: BorderRadius.all(Radius.circular(8))),
-              hintText: 'Что надо сделать...',
+              hintText: S.of(context).get("doSomething"),
             )));
   }
 }

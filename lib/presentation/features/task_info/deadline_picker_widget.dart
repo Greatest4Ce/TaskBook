@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:to_do_list_new/domain/state/tasks_state.dart';
+import 'package:to_do_list_new/S.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
+import '../../../domain/state/tasks_state_mobx.dart';
+import '../../../main.dart';
+
 class DeadlinePicker extends StatefulWidget {
   final id;
-  const DeadlinePicker({Key? key, this.id}) : super(key: key);
+  const DeadlinePicker({Key? key, required this.id}) : super(key: key);
 
   @override
   State<DeadlinePicker> createState() => _DeadlinePickerState();
@@ -16,66 +19,76 @@ class DeadlinePicker extends StatefulWidget {
 class _DeadlinePickerState extends State<DeadlinePicker> {
   @override
   Widget build(BuildContext context) {
+    final tasksState = getIt<TasksState>();
     bool newTask = widget.id == null ? true : false;
     bool switchValue = newTask
-        ? Provider.of<TasksState>(context).task.deadline != ''
+        ? tasksState.task.deadline != null
             ? true
             : false
-        : Provider.of<TasksState>(context)
-                    .tasks
-                    .singleWhere((e) => e.id == widget.id,
-                        orElse: () => Provider.of<TasksState>(context).task)
+        : tasksState.tasks
+                    .singleWhere(
+                      (e) => e.id == widget.id,
+                    )
                     .deadline !=
-                ''
+                null
             ? true
             : false;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          newTask
-              ? context.watch<TasksState>().task.deadline
-              : context
-                  .watch<TasksState>()
-                  .tasks
-                  .singleWhere((e) => e.id == widget.id,
-                      orElse: () => Provider.of<TasksState>(context).task)
-                  .deadline
-                  .toString(),
-          style: CustomTextTheme.subhead.copyWith(color: LightColors.blue),
+        Observer(
+          builder: (_) => Text(
+            newTask
+                ? tasksState.task.deadline == null
+                    ? ''
+                    : DateFormat("dd.MM.yyyy").format(tasksState.task.deadline!)
+                : tasksState.tasks
+                            .singleWhere(
+                              (e) => e.id == widget.id,
+                            )
+                            .deadline ==
+                        null
+                    ? ''
+                    : DateFormat("dd.MM.yyyy").format(tasksState.tasks
+                        .singleWhere(
+                          (e) => e.id == widget.id,
+                        )
+                        .deadline),
+            style: CustomTextTheme.subhead.copyWith(color: LightColors.blue),
+          ),
         ),
         Switch(
             inactiveTrackColor: LightColors.grayLight,
             value: switchValue,
             onChanged: (bool value) async {
               if (value == true) {
-                DateTime? newDate = await showDatePicker(
-                  context: context,
-                  helpText: '2021',
-                  cancelText: 'Отмена',
-                  confirmText: 'Готово',
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2025),
-                );
-                if (newDate != null) {
-                  String newDateFormatted =
-                      DateFormat('dd.MM.yyyy').format(newDate);
-                  Provider.of<TasksState>(context, listen: false)
-                      .changeDeadline(newDateFormatted);
-                }
+                datePicker(tasksState);
                 setState(() {
                   switchValue = true;
                 });
               } else {
-                Provider.of<TasksState>(context, listen: false)
-                    .changeDeadline('');
                 setState(() {
                   switchValue = false;
                 });
+                tasksState.changeDeadline(null);
               }
             })
       ],
     );
+  }
+
+  void datePicker(tasksState) async {
+    DateTime? newDate = await showDatePicker(
+      context: context,
+      helpText: '2021',
+      cancelText: S.of(context).get("cancel"),
+      confirmText: S.of(context).get("done"),
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2025),
+    );
+    if (newDate != null) {
+      tasksState.changeDeadline(newDate);
+    }
   }
 }

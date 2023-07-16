@@ -1,162 +1,181 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:to_do_list_new/domain/state/tasks_state.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:to_do_list_new/S.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
-class PriorityWidget extends StatelessWidget {
+import '../../../domain/state/tasks_state_mobx.dart';
+import '../../../main.dart';
+
+class PriorityWidget extends StatefulWidget {
   final id;
-  const PriorityWidget({Key? key, this.id}) : super(key: key);
+  const PriorityWidget({Key? key, required this.id}) : super(key: key);
+
+  @override
+  State<PriorityWidget> createState() => _PriorityWidgetState();
+}
+
+class _PriorityWidgetState extends State<PriorityWidget> {
   @override
   Widget build(BuildContext context) {
-    bool newTask = id == null ? true : false;
+    final tasksState = getIt<TasksState>();
+    bool newTask = widget.id == null;
     return newTask
-        ? Container(
-            height: 92,
-            padding: const EdgeInsets.only(top: 28),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Приоритет'),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 16),
-                  child: PopupMenuButton(
-                      position: PopupMenuPosition.under,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
+        ? Observer(
+            builder: (_) => Container(
+              height: 92,
+              padding: const EdgeInsets.only(top: 28),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).get("importance"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 16),
+                    child: PopupMenuButton(
+                        position: PopupMenuPosition.under,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(4),
+                          ),
                         ),
-                      ),
-                      initialValue: context.watch<TasksState>().task.priority,
-                      child: Text(
-                        context.watch<TasksState>().task.priority == "Высокий"
-                            ? "!! ${context.watch<TasksState>().task.priority}"
-                            : context.watch<TasksState>().task.priority,
-                        style:
-                            context.watch<TasksState>().task.priority == 'Нет'
-                                ? CustomTextTheme.subhead
-                                : context.watch<TasksState>().task.priority ==
-                                        'Высокий'
-                                    ? CustomTextTheme.body
+                        initialValue: tasksState.task.importance,
+                        child: Observer(
+                          builder: (_) => Text(
+                            tasksState.task.importance == "important"
+                                ? S.of(context).get("high")
+                                : tasksState.task.importance == "low"
+                                    ? S.of(context).get("low")
+                                    : S.of(context).get("basic"),
+                            style: tasksState.task.importance == 'basic'
+                                ? Theme.of(context).textTheme.labelMedium
+                                : tasksState.task.importance == 'important'
+                                    ? Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
                                         .copyWith(color: LightColors.red)
-                                    : CustomTextTheme.subhead
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
                                         .copyWith(color: LightColors.blue),
-                      ),
-                      onSelected: (value) {
-                        Provider.of<TasksState>(context, listen: false)
-                            .changePriority(value);
-                      },
-                      itemBuilder: (BuildContext context) =>
-                          <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              value: 'Нет',
-                              child: Text('Нет'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Низкий',
-                              child: Text('Низкий'),
-                            ),
-                            PopupMenuItem<String>(
-                              value: 'Высокий',
-                              child: Text(
-                                '!! Высокий',
-                                style: CustomTextTheme.body
-                                    .copyWith(color: LightColors.red),
+                          ),
+                        ),
+                        onSelected: (value) {
+                          tasksState.changePriority(value);
+                          setState(() {});
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                              PopupMenuItem<String>(
+                                value: 'basic',
+                                child: Text(S.of(context).get("basic")),
                               ),
-                            ),
-                          ]),
-                ),
-              ],
+                              PopupMenuItem<String>(
+                                value: 'low',
+                                child: Text(S.of(context).get("low")),
+                              ),
+                              PopupMenuItem<String>(
+                                value: 'important',
+                                child: Text(
+                                  S.of(context).get("high"),
+                                  style: CustomTextTheme.body
+                                      .copyWith(color: LightColors.red),
+                                ),
+                              ),
+                            ]),
+                  ),
+                ],
+              ),
             ),
           )
-        : Container(
-            height: 92,
-            padding: const EdgeInsets.only(top: 28),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Приоритет'),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 16),
-                  child: PopupMenuButton(
-                      position: PopupMenuPosition.under,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
+        : Observer(
+            builder: (_) => Container(
+              height: 92,
+              padding: const EdgeInsets.only(top: 28),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).get("importance"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 16),
+                    child: PopupMenuButton(
+                        position: PopupMenuPosition.under,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(4),
+                          ),
                         ),
-                      ),
-                      initialValue: newTask
-                          ? 'Нет'
-                          : context
-                              .watch<TasksState>()
-                              .tasks
-                              .singleWhere((e) => e.id == id,
-                                  orElse: () =>
-                                      Provider.of<TasksState>(context).task)
-                              .priority,
-                      child: Text(
-                        context
-                                    .watch<TasksState>()
-                                    .tasks
-                                    .singleWhere((e) => e.id == id,
-                                        orElse: () =>
-                                            Provider.of<TasksState>(context)
-                                                .task)
-                                    .priority ==
-                                "Высокий"
-                            ? "!! ${context.watch<TasksState>().task.priority}"
-                            : context.watch<TasksState>().task.priority,
-                        style: context
-                                    .watch<TasksState>()
-                                    .tasks
-                                    .singleWhere((e) => e.id == id,
-                                        orElse: () =>
-                                            Provider.of<TasksState>(context)
-                                                .task)
-                                    .priority ==
-                                'Нет'
-                            ? CustomTextTheme.subhead
-                            : context
-                                        .watch<TasksState>()
-                                        .tasks
-                                        .singleWhere((e) => e.id == id,
-                                            orElse: () =>
-                                                Provider.of<TasksState>(context)
-                                                    .task)
-                                        .priority ==
-                                    'Высокий'
-                                ? CustomTextTheme.body
-                                    .copyWith(color: LightColors.red)
-                                : CustomTextTheme.subhead
-                                    .copyWith(color: LightColors.blue),
-                      ),
-                      onSelected: (value) {
-                        Provider.of<TasksState>(context, listen: false)
-                            .changePriority(value);
-                      },
-                      itemBuilder: (BuildContext context) =>
-                          <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              value: 'Нет',
-                              child: Text('Нет'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Низкий',
-                              child: Text('Низкий'),
-                            ),
-                            PopupMenuItem<String>(
-                              value: 'Высокий',
-                              child: Text(
-                                '!! Высокий',
-                                style: CustomTextTheme.body
-                                    .copyWith(color: LightColors.red),
+                        initialValue: newTask
+                            ? S.of(context).get("basic")
+                            : tasksState.tasks
+                                .singleWhere((e) => e.id == widget.id,
+                                    orElse: () => tasksState.task)
+                                .importance,
+                        child: Text(
+                          tasksState.tasks
+                                      .singleWhere((e) => e.id == widget.id,
+                                          orElse: () => tasksState.task)
+                                      .importance ==
+                                  "important"
+                              ? S.of(context).get("high")
+                              : tasksState.tasks
+                                          .singleWhere((e) => e.id == widget.id,
+                                              orElse: () => tasksState.task)
+                                          .importance ==
+                                      "low"
+                                  ? S.of(context).get("low")
+                                  : S.of(context).get("basic"),
+                          style: tasksState.tasks
+                                      .singleWhere((e) => e.id == widget.id,
+                                          orElse: () => tasksState.task)
+                                      .importance ==
+                                  'basic'
+                              ? Theme.of(context).textTheme.labelMedium
+                              : tasksState.tasks
+                                          .singleWhere((e) => e.id == widget.id,
+                                              orElse: () => tasksState.task)
+                                          .importance ==
+                                      'important'
+                                  ? Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(color: LightColors.red)
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(color: LightColors.blue),
+                        ),
+                        onSelected: (value) {
+                          tasksState.changePriority(value);
+                          setState(() {});
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                              PopupMenuItem<String>(
+                                value: 'basic',
+                                child: Text(S.of(context).get("basic")),
                               ),
-                            ),
-                          ]),
-                ),
-              ],
+                              PopupMenuItem<String>(
+                                value: 'low',
+                                child: Text(S.of(context).get("low")),
+                              ),
+                              PopupMenuItem<String>(
+                                value: 'important',
+                                child: Text(
+                                  S.of(context).get("high"),
+                                  style: CustomTextTheme.body
+                                      .copyWith(color: LightColors.red),
+                                ),
+                              ),
+                            ]),
+                  ),
+                ],
+              ),
             ),
           );
   }

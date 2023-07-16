@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_new/S.dart';
 import 'package:to_do_list_new/presentation/features/task_info/deadline_picker_widget.dart';
 
 class DeadlineWidget extends StatelessWidget {
   final id;
-  const DeadlineWidget({Key? key, this.id}) : super(key: key);
+  const DeadlineWidget({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,10 @@ class DeadlineWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [const Text('Сделать до'), DeadlinePicker(id: id)],
+        children: [
+          Text(S.of(context).get("doItUntil")),
+          DeadlinePicker(id: id)
+        ],
       ),
     );
   }

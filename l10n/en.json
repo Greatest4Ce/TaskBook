@@ -1,0 +1,15 @@
+{
+    "myTasks": "My tasks",
+    "tasksDone": "Tasks done",
+    "save": "Save",
+    "new": "new task",
+    "doSomething": "do someting...",
+    "importance" : "importance",
+    "doItUntil": "Do it until",
+    "delete": "Delete",
+    "low": "Low",
+    "basic": "Basic",
+    "high": "!! High",
+    "cancel": "Cancel",
+    "done": "Done"
+}

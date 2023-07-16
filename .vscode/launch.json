@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "toDoListY",
+            "name": "TaskBook",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "toDoListY (profile mode)",
+            "name": "TaskBook (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "toDoListY (release mode)",
+            "name": "TaskBook (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

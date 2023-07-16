@@ -16,6 +16,6 @@ class NavigationLogger extends NavigatorObserver {
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
-    log('NavigationLogger.didReplace:  ${oldRoute?.settings.name} -> ${newRoute?.settings.name}');
+    log('NavigationLogger.didReplace:  ${newRoute?.settings.name}');
   }
 }

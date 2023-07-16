@@ -1,13 +1,19 @@
 class TaskModel {
   String id;
-  String status;
-  String taskText;
-  String priority;
-  String deadline;
+  bool done;
+  String text;
+  String importance;
+  DateTime? deadline;
+  int createdAt;
+  int changedAt;
+  var lastUpdatedBy;
   TaskModel(
       {required this.id,
-      required this.status,
-      required this.taskText,
-      required this.priority,
-      required this.deadline});
+      required this.done,
+      required this.text,
+      required this.importance,
+      required this.deadline,
+      required this.createdAt,
+      required this.changedAt,
+      required this.lastUpdatedBy});
 }
