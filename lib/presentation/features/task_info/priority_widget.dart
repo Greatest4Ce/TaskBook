@@ -6,6 +6,7 @@ import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
 class PriorityWidget extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final id;
   const PriorityWidget({Key? key, required this.id}) : super(key: key);
 

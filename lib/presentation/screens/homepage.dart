@@ -95,6 +95,7 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
     final progress = shrinkOffset / maxExtent;
     return Container(
       decoration: BoxDecoration(
+        // ignore: deprecated_member_use
         color: Theme.of(context).backgroundColor,
         boxShadow: [
           BoxShadow(

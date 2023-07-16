@@ -3,6 +3,7 @@ import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:to_do_list_new/s.dart';
 
 class TaskTextField extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final id;
   const TaskTextField({Key? key, required this.id}) : super(key: key);
 

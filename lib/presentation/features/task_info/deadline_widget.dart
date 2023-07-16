@@ -3,6 +3,7 @@ import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/presentation/features/task_info/deadline_picker_widget.dart';
 
 class DeadlineWidget extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final id;
   const DeadlineWidget({Key? key, required this.id}) : super(key: key);
 

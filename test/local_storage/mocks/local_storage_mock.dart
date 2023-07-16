@@ -17,11 +17,11 @@ class LocalStorageUtilMock implements LocalStorageUtil {
 
   @override
   Future<TaskModel> localEditTask(TaskModel task) {
-    _tasks.forEach((element) {
+    for (var element in _tasks) {
       if (element.id == task.id) {
         element = task;
       }
-    });
+    }
     return Future.value(task);
   }
 

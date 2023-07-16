@@ -9,6 +9,7 @@ import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 import 'package:to_do_list_new/s.dart';
 
 class DeadlinePicker extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final id;
   const DeadlinePicker({Key? key, required this.id}) : super(key: key);
 

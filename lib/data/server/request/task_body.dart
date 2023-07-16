@@ -14,7 +14,7 @@ class TaskBody {
       "color": null,
       "created_at": element.createdAt,
       "changed_at": element.changedAt,
-      "last_updated_by": '${element.lastUpdatedBy}'
+      "last_updated_by": element.lastUpdatedBy
     };
   }
 }

@@ -5,6 +5,7 @@ import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
 class Themes {
   ThemeData get lightTheme => ThemeData(
+      // ignore: deprecated_member_use
       backgroundColor: LightColors.backgroundColor,
       cardColor: LightColors.backSecondary,
       unselectedWidgetColor: LightColors.white,
@@ -29,6 +30,7 @@ class Themes {
           color: LightColors.backgroundColor));
   ThemeData get darkTheme => ThemeData(
         iconTheme: const IconThemeData(color: DarkColors.gray),
+        // ignore: deprecated_member_use
         backgroundColor: DarkColors.backgroundColor,
         cardColor: DarkColors.backSecondary,
         unselectedWidgetColor: DarkColors.backSecondary,

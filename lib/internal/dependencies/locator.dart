@@ -32,10 +32,10 @@ abstract class Locator {
     _initCrashlytics();
 
     WidgetsFlutterBinding.ensureInitialized();
-    _locator.registerSingleton<TasksRepository>(
-        TasksDataRepository(ApiModule.apiUtil()));
     _locator.registerSingleton<LocalTasksRepository>(
         LocalTasksDataRepository(LocalStorageModule.localStorageUtil()));
+    _locator.registerSingleton<TasksRepository>(
+        TasksDataRepository(ApiModule.apiUtil()));
     _locator.registerSingleton<TasksState>(TasksState());
     _locator.registerSingleton(ConnectionStatus.getInstance());
     connectionStatus.initialize();
