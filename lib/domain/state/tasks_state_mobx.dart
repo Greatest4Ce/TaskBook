@@ -1,10 +1,9 @@
 import 'dart:developer';
-
 import 'package:mobx/mobx.dart';
 import 'package:to_do_list_new/domain/repository/locals_tasks_repository.dart';
 import 'package:to_do_list_new/domain/repository/tasks_reporsitory.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
-import 'package:to_do_list_new/domain/state/connection.dart';
+import 'package:to_do_list_new/domain/state/connection_status.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../internal/dependencies/repository_module.dart';
@@ -18,11 +17,13 @@ abstract class TasksStateBase with Store {
   final TasksRepository tasksRepository = RepositoryModule.tasksRepository();
   final LocalTasksRepository localTasksRepository =
       RepositoryModule.localTasksRepository();
-  ConnectionStatusSingleton connectionStatus =
-      ConnectionStatusSingleton.getInstance();
+  final ConnectionStatus _connectionStatus = ConnectionStatus.getInstance();
 
   @computed
-  bool get hasConnection => connectionStatus.hasConnection;
+  bool get hasConnection => _connectionStatus.hasConnection;
+
+  // @computed
+  // String? get deviceId => _getId();
 
   @observable
   ObservableList<TaskModel> _tasks = <TaskModel>[].asObservable();
@@ -46,9 +47,9 @@ abstract class TasksStateBase with Store {
       text: '',
       importance: 'basic',
       deadline: null,
-      createdAt: 0,
-      changedAt: 0,
-      lastUpdatedBy: 145);
+      createdAt: DateTime.now(),
+      changedAt: DateTime.now(),
+      lastUpdatedBy: '145');
 
   @action
   Future<void> getTasks() async {
@@ -56,7 +57,7 @@ abstract class TasksStateBase with Store {
     final data = hasConnection
         ? await tasksRepository.getTasks()
         : await localTasksRepository.getLocalTasks();
-    _tasks = data;
+    _tasks = ObservableList.of(data);
     log('Задачи переданы в ui');
     isLoading = false;
     initDoneCounter();
@@ -80,22 +81,29 @@ abstract class TasksStateBase with Store {
   @action
   void saveNewTask() {
     task.id = const Uuid().v1().toString();
-    task.createdAt = DateTime.now().toUtc().millisecondsSinceEpoch;
-    task.changedAt = DateTime.now().toUtc().millisecondsSinceEpoch;
+    task.createdAt = DateTime.now();
+    task.changedAt = DateTime.now();
     _tasks.add(task);
-    hasConnection
-        ? tasksRepository.postTask(task.id, task)
-        : localTasksRepository.localSaveTask(task);
+    if (hasConnection) {
+      tasksRepository.postTask(task.id, task);
+      localTasksRepository.localSaveTask(task);
+    } else {
+      localTasksRepository.localSaveTask(task);
+    }
   }
 
   @action
   void saveTask(id) {
-    task.changedAt = DateTime.now().toUtc().millisecondsSinceEpoch;
+    task.changedAt = DateTime.now().toUtc();
     _tasks[_tasks.indexWhere((e) => e.id == id)] = task;
-    hasConnection
-        ? tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)])
-        : localTasksRepository
-            .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    if (hasConnection) {
+      tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)]);
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    } else {
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    }
   }
 
   @action
@@ -111,9 +119,9 @@ abstract class TasksStateBase with Store {
         text: '',
         importance: 'basic',
         deadline: null,
-        createdAt: 0,
-        changedAt: 0,
-        lastUpdatedBy: 145);
+        createdAt: DateTime.now(),
+        changedAt: DateTime.now(),
+        lastUpdatedBy: '145');
   }
 
   @action
@@ -134,20 +142,28 @@ abstract class TasksStateBase with Store {
   @action
   void markAsDone(id) {
     _tasks[_tasks.indexWhere((e) => e.id == id)].done = true;
-    hasConnection
-        ? tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)])
-        : localTasksRepository
-            .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    if (hasConnection) {
+      tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)]);
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    } else {
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    }
     doneCounter++;
   }
 
   @action
   void markAsNotDone(id) {
     _tasks[tasks.indexWhere((e) => e.id == id)].done = false;
-    hasConnection
-        ? tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)])
-        : localTasksRepository
-            .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    if (hasConnection) {
+      tasksRepository.editTask(_tasks[tasks.indexWhere((e) => e.id == id)]);
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    } else {
+      localTasksRepository
+          .localEditTask(_tasks[_tasks.indexWhere((e) => e.id == id)]);
+    }
     doneCounter--;
   }
 
@@ -156,8 +172,24 @@ abstract class TasksStateBase with Store {
     if (_tasks[_tasks.indexWhere((e) => e.id == id)].done == true) {
       doneCounter--;
     }
-    hasConnection
-        ? tasksRepository.deleteTask(id)
-        : localTasksRepository.localDeleteTask(id);
+    if (hasConnection) {
+      tasksRepository.deleteTask(id);
+      localTasksRepository.localDeleteTask(id);
+    } else {
+      localTasksRepository.localDeleteTask(id);
+    }
   }
+
+  // @action
+  // Future<String?> _getId() async {
+  //   var deviceInfo = DeviceInfoPlugin();
+  //   if (Platform.isIOS) {
+  //     // import 'dart:io'
+  //     var iosDeviceInfo = await deviceInfo.iosInfo;
+  //     return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+  //   } else if (Platform.isAndroid) {
+  //     var androidDeviceInfo = await deviceInfo.androidInfo;
+  //     return androidDeviceInfo.id; // unique ID on Android
+  //   }
+  // }
 }

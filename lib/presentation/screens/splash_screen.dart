@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../domain/state/tasks_state_mobx.dart';
@@ -17,7 +16,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   initState() {
     super.initState();
-
     _tasksState.getTasks();
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
-import 'package:to_do_list_new/S.dart';
+import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
 import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
 import 'package:to_do_list_new/main.dart';
@@ -22,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     final TasksState tasksState = getIt<TasksState>();
     return Scaffold(
         floatingActionButton: FloatingActionButton(
+            key: const Key("newTaskButton"),
             child: const Icon(Icons.add),
             onPressed: () {
               NavigationManager.instance.openTaskScreen();
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                                       child: CircularProgressIndicator(),
                                     )
                                   : tasksState.tasks == []
-                                      ? const NewTaskWIdget()
+                                      ? const NewTaskWidget()
                                       : Observer(
                                           builder: (_) => ListView.builder(
                                               padding:
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                                                       int index) {
                                                 return index ==
                                                         tasksState.tasks.length
-                                                    ? const NewTaskWIdget()
+                                                    ? const NewTaskWidget()
                                                     : TaskWidget(
                                                         id: tasksState
                                                             .tasks[index].id);

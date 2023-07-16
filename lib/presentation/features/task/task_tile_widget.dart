@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
@@ -124,18 +126,18 @@ class TaskTileWidget extends StatelessWidget {
           builder: (_) => Text(
             tasksState.tasks.singleWhere((e) => e.id == id).deadline == null
                 ? ''
-                : DateFormat('dd.MM.yyyy')
+                : DateFormat.yMMMMd(Platform.localeName)
                     .format(tasksState.tasks
                         .singleWhere((e) => e.id == id)
                         .deadline)
                     .toString(),
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.labelMedium,
           ),
         ),
       ),
-      trailing: Column(
+      trailing: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: const [CustomIcons.infooutline],
+        children: [CustomIcons.infooutline],
       ),
     );
   }

@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_new/S.dart';
-import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
+import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/presentation/features/task_info/deadline_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/priority_widget.dart';
-import 'package:to_do_list_new/presentation/features/task_info/tast_textfield_widget.dart';
+import 'package:to_do_list_new/presentation/features/task_info/task_textfield_widget.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
 import '../../../domain/state/tasks_state_mobx.dart';
 import '../../../main.dart';
 
-class CreateTaskWidget extends StatelessWidget {
+class CreateTaskWidget extends StatefulWidget {
   final id;
   const CreateTaskWidget({Key? key, required this.id}) : super(key: key);
 
   @override
+  State<CreateTaskWidget> createState() => _CreateTaskWidgetState();
+}
+
+class _CreateTaskWidgetState extends State<CreateTaskWidget> {
+  @override
   Widget build(BuildContext context) {
-    bool newTask = id == null ? true : false;
+    bool newTask = widget.id == null ? true : false;
     final tasksState = getIt<TasksState>();
     return SingleChildScrollView(
       child: Padding(
@@ -29,12 +33,12 @@ class CreateTaskWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TaskTextField(id: id),
-                  PriorityWidget(id: id),
+                  TaskTextField(id: widget.id),
+                  PriorityWidget(id: widget.id),
                   const Divider(
                     height: 2,
                   ),
-                  DeadlineWidget(id: id)
+                  DeadlineWidget(id: widget.id)
                 ],
               ),
             ),
@@ -63,8 +67,10 @@ class CreateTaskWidget extends StatelessWidget {
                         color: newTask ? LightColors.gray : LightColors.red),
                   ),
                   onPressed: () {
-                    NavigationManager.instance.backHome();
-                    tasksState.deleteTask(id);
+                    Navigator.pop(context, () {
+                      setState(() {});
+                    });
+                    tasksState.deleteTask(widget.id);
                   }),
             )
           ],

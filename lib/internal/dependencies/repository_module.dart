@@ -2,12 +2,14 @@ import 'package:to_do_list_new/data/local_storage/repository/local_tasks_data_re
 import 'package:to_do_list_new/data/server/repository/tasks_data_repository.dart';
 import 'package:to_do_list_new/domain/repository/locals_tasks_repository.dart';
 import 'package:to_do_list_new/domain/repository/tasks_reporsitory.dart';
+import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
 import 'package:to_do_list_new/internal/dependencies/api_module.dart';
 import 'package:to_do_list_new/internal/dependencies/local_storage_module.dart';
 
 class RepositoryModule {
   static late TasksRepository _tasksRepository;
   static late LocalTasksRepository _localTasksRepository;
+  static late TasksState _tasksState;
 
   static TasksRepository tasksRepository() {
     _tasksRepository = TasksDataRepository(ApiModule.apiUtil());
@@ -18,5 +20,10 @@ class RepositoryModule {
     _localTasksRepository =
         LocalTasksDataRepository(LocalStorageModule.localStorageUtil());
     return _localTasksRepository;
+  }
+
+  static TasksState tasksState() {
+    _tasksState = TasksState();
+    return _tasksState;
   }
 }

@@ -1,36 +1,45 @@
-import 'dart:developer';
+import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:to_do_list_new/data/server/models/api_task_list.dart';
-import 'package:to_do_list_new/data/server/request/task_body.dart';
+import 'package:to_do_list_new/data/revision/local_revision.dart';
+import 'package:to_do_list_new/data/revision/revision.dart';
+import 'package:to_do_list_new/data/server/interceptors/interceptros.dart';
+import 'package:to_do_list_new/data/server/models/models.dart';
+import 'package:to_do_list_new/domain/repository/locals_tasks_repository.dart';
+import 'package:to_do_list_new/internal/dependencies/repository_module.dart';
+import 'package:to_do_list_new/internal/logger/logger.dart';
+
+import '../requests/requests.dart';
 
 class TaskService {
+  LocalTasksRepository localTasksRepository =
+      RepositoryModule.localTasksRepository();
   static const _url = 'https://beta.mrdekk.ru/todobackend/list';
-  late int revision = 0;
-  Dio? _dio;
+  final revision = RevisionProvider();
+  final locRevision = LocalRevisionProvider();
 
-  Dio get _dioGetter {
-    _dio ??= Dio();
-    _dio!.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
-      options.headers = {
-        "authorization": 'Bearer underoxidise',
-        'X-Last-Known-Revision': revision
-      };
-      handler.next(options);
-    }, onResponse: (e, handler) {
-      // log('$e');
-      handler.next(e);
-    }));
-    return _dio!;
+  late Dio _dio;
+
+  TaskService() {
+    _dio = Dio();
+    _dio.interceptors.add(AuthInterceptor());
   }
 
   Future<ApiTaskList> getTasks() async {
-    final response = await _dioGetter.get<Map<String, dynamic>>(_url);
+    logger.v('GET: $_url');
+    final response = await _dio.get<Map<String, dynamic>>(_url);
     if (response.statusCode == 200) {
-      final data = response.data;
+      var data = response.data;
+      logger.v(data);
       if (data != null) {
-        revision = data["revision"];
-        log('Задачи получены с сервера');
-        return ApiTaskList.fromApi(data["list"]);
+        if (locRevision.get()) {
+          final patchedData = await patchTasks();
+          await localTasksRepository
+              .updateLocalFromApi(ApiTaskList.fromApi(patchedData["list"]));
+          return ApiTaskList.fromApi(patchedData["list"]);
+        } else {
+          revision.set(data["revision"]);
+          return ApiTaskList.fromApi(data["list"]);
+        }
       }
     }
     throw ArgumentError();
@@ -38,50 +47,64 @@ class TaskService {
 
   Future postTask(String id, element) async {
     try {
-      final postData = TaskBody(element: element).toApi();
-      log('$postData');
-      final response = await _dioGetter.post(
+      final postData =
+          TaskRequest(task: TaskBody(element: element).toMap()).toApi();
+      logger
+        ..v('POST: $_url')
+        ..v(postData);
+      final response = await _dio.post(
         _url,
         data: postData,
       );
-      if (response.statusCode == 200) {
-        log('Задача добавлена на сервер');
-        revision = response.data["revision"];
-        return response.data;
-      }
-      throw ArgumentError();
-    } catch (e) {
-      log('$e');
+      logger.v(response.data);
+      revision.set(response.data["revision"]);
+      return response.data;
+    } on DioException catch (e) {
+      throw e.error as Exception;
+    }
+  }
+
+  Future patchTasks() async {
+    try {
+      final localTasks = await localTasksRepository.getLocalTasks();
+      final patchData = TaskListRequest(list: localTasks).toMap();
+      logger
+        ..v('PATCH: $_url')
+        ..v(patchData);
+      final response = await _dio.patch(_url, data: jsonEncode(patchData));
+      revision.set(response.data["revision"]);
+      logger.v(response.data);
+      return response.data;
+    } on DioException catch (e) {
+      throw e.error as Exception;
     }
   }
 
   Future deleteTask(String id) async {
     try {
-      final response = await _dioGetter.delete('$_url/$id');
-      if (response.statusCode == 200) {
-        log('Задача удалена на сервере');
-        revision = response.data["revision"];
-        return;
-      }
-      throw ArgumentError();
-    } catch (e) {
-      log('$e');
+      logger.v('DELETE: $_url/$id');
+      final response = await _dio.delete('$_url/$id');
+      logger.v(response.data);
+      revision.set(response.data["revision"]);
+      return;
+    } on DioException catch (e) {
+      throw e.error as Exception;
     }
   }
 
-  Future editTask(element) async {
+  Future<void> editTask(element) async {
     try {
-      final postData = TaskBody(element: element).toApi();
-      final response =
-          await _dioGetter.put('$_url/${element.id}', data: postData);
-      if (response.statusCode == 200) {
-        log('Задача изменена на сервере');
-        revision = response.data["revision"];
-        return response.data;
-      }
-      throw ArgumentError();
-    } catch (e) {
-      log('$e');
+      final postData =
+          TaskRequest(task: TaskBody(element: element).toMap()).toApi();
+      logger
+        ..v('PUT: $_url/${element.id}')
+        ..v(postData);
+      final response = await _dio.put('$_url/${element.id}', data: postData);
+      logger.v(response.data);
+      revision.set(response.data["revision"]);
+      return response.data;
+    } on DioException catch (e) {
+      throw e.error as Exception;
     }
   }
 }

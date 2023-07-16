@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:to_do_list_new/S.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
+import 'package:to_do_list_new/s.dart';
 
 import '../../../domain/state/tasks_state_mobx.dart';
 import '../../../main.dart';
@@ -20,19 +22,8 @@ class _DeadlinePickerState extends State<DeadlinePicker> {
   @override
   Widget build(BuildContext context) {
     final tasksState = getIt<TasksState>();
-    bool newTask = widget.id == null ? true : false;
-    bool switchValue = newTask
-        ? tasksState.task.deadline != null
-            ? true
-            : false
-        : tasksState.tasks
-                    .singleWhere(
-                      (e) => e.id == widget.id,
-                    )
-                    .deadline !=
-                null
-            ? true
-            : false;
+    bool newTask = widget.id == null;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -41,7 +32,8 @@ class _DeadlinePickerState extends State<DeadlinePicker> {
             newTask
                 ? tasksState.task.deadline == null
                     ? ''
-                    : DateFormat("dd.MM.yyyy").format(tasksState.task.deadline!)
+                    : DateFormat.yMMMMd(Platform.localeName)
+                        .format(tasksState.task.deadline!)
                 : tasksState.tasks
                             .singleWhere(
                               (e) => e.id == widget.id,
@@ -49,27 +41,24 @@ class _DeadlinePickerState extends State<DeadlinePicker> {
                             .deadline ==
                         null
                     ? ''
-                    : DateFormat("dd.MM.yyyy").format(tasksState.tasks
-                        .singleWhere(
-                          (e) => e.id == widget.id,
-                        )
-                        .deadline),
+                    : DateFormat.yMMMMd(Platform.localeName)
+                        .format(tasksState.tasks
+                            .singleWhere(
+                              (e) => e.id == widget.id,
+                            )
+                            .deadline),
             style: CustomTextTheme.subhead.copyWith(color: LightColors.blue),
           ),
         ),
         Switch(
             inactiveTrackColor: LightColors.grayLight,
-            value: switchValue,
+            value: tasksState.task.deadline != null,
             onChanged: (bool value) async {
-              if (value == true) {
-                datePicker(tasksState);
-                setState(() {
-                  switchValue = true;
-                });
+              if (value) {
+                await datePicker(tasksState, context);
+                setState(() {});
               } else {
-                setState(() {
-                  switchValue = false;
-                });
+                setState(() {});
                 tasksState.changeDeadline(null);
               }
             })
@@ -77,7 +66,7 @@ class _DeadlinePickerState extends State<DeadlinePicker> {
     );
   }
 
-  void datePicker(tasksState) async {
+  Future<void> datePicker(tasksState, context) async {
     DateTime? newDate = await showDatePicker(
       context: context,
       helpText: '2021',

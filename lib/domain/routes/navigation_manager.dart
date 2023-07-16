@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:to_do_list_new/domain/routes/navigation_logger.dart';
 import 'package:to_do_list_new/domain/routes/route_names.dart';
-
 
 class NavigationManager {
   NavigationManager._();

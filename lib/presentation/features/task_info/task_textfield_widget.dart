@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_new/S.dart';
+import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
 
 import '../../../main.dart';
@@ -41,24 +41,24 @@ class _TaskTextFieldState extends State<TaskTextField> {
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         elevation: 3,
         child: TextField(
-            onEditingComplete: () {
-              tasksState.changeTextOfTask(_textEditingController.text);
-              FocusScope.of(context).unfocus();
+            onChanged: (text) {
+              tasksState.changeTextOfTask(text);
             },
+            minLines: 3,
             maxLines: null,
             controller: _textEditingController,
             style: Theme.of(context).textTheme.bodyMedium,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              filled: true,
-              fillColor: Theme.of(context).unselectedWidgetColor,
-              focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 0),
-                  borderRadius: BorderRadius.all(Radius.circular(8))),
-              enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(width: 0),
-                  borderRadius: BorderRadius.all(Radius.circular(8))),
-              hintText: S.of(context).get("doSomething"),
-            )));
+                filled: true,
+                fillColor: Theme.of(context).unselectedWidgetColor,
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 0),
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(width: 0),
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                hintText: S.of(context).get("doSomething"),
+                hintStyle: Theme.of(context).textTheme.labelMedium)));
   }
 }

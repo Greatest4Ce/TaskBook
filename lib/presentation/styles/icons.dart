@@ -8,7 +8,7 @@ class CustomIcons {
   );
   static const Image arrowback = Image(
     image: AssetImage('assets/icons/arrow_back.png'),
-    color: LightColors.labelTerritory,
+    color: LightColors.gray,
   );
   static const Image check = Image(
     image: AssetImage('assets/icons/check.png'),

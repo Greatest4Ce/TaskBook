@@ -1,22 +1,19 @@
 import 'package:to_do_list_new/data/local_storage/models/isar_model.dart';
+import 'package:to_do_list_new/domain/models/task_model.dart';
 
 class LocalTaskBody {
-  TaskModelIsar element;
-  LocalTaskBody({required this.element});
+  TaskModel task;
+  LocalTaskBody({required this.task});
 
-  Map<String, dynamic> toApi() {
-    return {
-      "element": {
-        "id": element.taskId.toString(),
-        "text": element.text,
-        "importance": element.importance,
-        "deadline": element.deadline!.toUtc().millisecondsSinceEpoch,
-        "done": element.done,
-        "color": null,
-        "created_at": element.createdAt,
-        "changed_at": element.changedAt,
-        "last_updated_by": element.lastUpdatedBy
-      }
-    };
+  TaskModelIsar toIsar() {
+    return TaskModelIsar()
+      ..taskId = task.id
+      ..text = task.text
+      ..done = task.done
+      ..deadline = task.deadline
+      ..importance = task.importance
+      ..changedAt = task.changedAt
+      ..createdAt = task.createdAt
+      ..lastUpdatedBy = task.lastUpdatedBy;
   }
 }

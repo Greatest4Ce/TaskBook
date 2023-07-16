@@ -1,35 +1,34 @@
-import 'package:mobx/mobx.dart';
 import 'package:to_do_list_new/data/local_storage/local_storage_util.dart';
 import 'package:to_do_list_new/domain/models/task_model.dart';
 import 'package:to_do_list_new/domain/repository/locals_tasks_repository.dart';
 
-class LocalTasksDataRepository extends LocalTasksRepository {
+class LocalTasksDataRepository implements LocalTasksRepository {
   final LocalStorageUtil _localStorageUtil;
 
   LocalTasksDataRepository(this._localStorageUtil);
 
   @override
-  Future<ObservableList<TaskModel>> getLocalTasks() {
-    return _localStorageUtil.getTasksHistory();
+  Future<List<TaskModel>> getLocalTasks() {
+    return _localStorageUtil.getLocalTasks();
   }
 
   @override
-  Future<void> localSaveTask(TaskModel task) {
-    return _localStorageUtil.localSaveTask(task: task);
+  Future<TaskModel> localSaveTask(TaskModel task) {
+    return _localStorageUtil.localSaveTask(task);
   }
 
   @override
-  Future<void> localEditTask(TaskModel task) {
-    return _localStorageUtil.localEditTask(task: task);
+  Future<TaskModel> localEditTask(TaskModel task) {
+    return _localStorageUtil.localEditTask(task);
   }
 
   @override
   Future<void> localDeleteTask(String id) {
-    return _localStorageUtil.localDeleteTask(id: id);
+    return _localStorageUtil.localDeleteTask(id);
   }
 
   @override
-  Future<void> updateFromApi(dataFromApi) {
-    return _localStorageUtil.updateFromApi(dataFromApi: dataFromApi);
+  Future<void> updateLocalFromApi(data) {
+    return _localStorageUtil.updateFromApi(data);
   }
 }
