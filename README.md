@@ -107,7 +107,7 @@ TaskModel
 ```
 Сохранение изменений задания
 
-```
+```dart
 void savetask(id) {
     _tasks[_tasks.indexWhere((e) => e.id == id)] = _task;
     notifyListeners();
@@ -117,7 +117,7 @@ void savetask(id) {
 
 MaterialApp
 
-```
+```dart
 MaterialApp(
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -136,7 +136,7 @@ MaterialApp(
 
 Get запрос к серверу
 
-```
+```dart
   Future<ApiTaskList> getTasks() async {
     final response = await _dioGetter.get<Map<String, dynamic>>(_url);
     if (response.statusCode == 200) {
@@ -153,7 +153,7 @@ Get запрос к серверу
 
 Преобразование данных полученных с сервера в TaskModel
 
-```
+```dart
 class TaskMapper {
   static TaskModel fromJson(ApiTask task) {
     return TaskModel(
