@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/presentation/features/task_info/deadline_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/priority_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/task_textfield_widget.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
-
-import '../../../domain/state/tasks_state_mobx.dart';
-import '../../../main.dart';
 
 class CreateTaskWidget extends StatefulWidget {
   final id;
@@ -21,13 +19,17 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
   @override
   Widget build(BuildContext context) {
     bool newTask = widget.id == null ? true : false;
-    final tasksState = getIt<TasksState>();
+    final tasksState = Locator.tasksState;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            TextButton(
+              onPressed: () => throw Exception(),
+              child: const Text("Throw Test Exception"),
+            ),
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Column(

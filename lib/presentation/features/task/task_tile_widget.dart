@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:to_do_list_new/presentation/features/task/check_box.dart';
 import 'package:to_do_list_new/presentation/screens/create_task_screen.dart';
 import 'package:to_do_list_new/presentation/styles/icons.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
-import '../../../domain/state/tasks_state_mobx.dart';
-import '../../../main.dart';
 
 class TaskTileWidget extends StatelessWidget {
   final String id;
@@ -16,7 +15,7 @@ class TaskTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tasksState = getIt<TasksState>();
+    final tasksState = Locator.tasksState;
     return ListTile(
       isThreeLine: true,
       onTap: () {

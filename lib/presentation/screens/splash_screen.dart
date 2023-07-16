@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../domain/state/tasks_state_mobx.dart';
-import '../../main.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,12 +9,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final _tasksState = getIt<TasksState>();
+  final tasksState = Locator.tasksState;
 
   @override
   initState() {
     super.initState();
-    _tasksState.getTasks();
+    tasksState.getTasks();
   }
 
   @override

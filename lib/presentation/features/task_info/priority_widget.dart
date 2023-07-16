@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
-
-import '../../../domain/state/tasks_state_mobx.dart';
-import '../../../main.dart';
 
 class PriorityWidget extends StatefulWidget {
   final id;
@@ -18,7 +16,7 @@ class PriorityWidget extends StatefulWidget {
 class _PriorityWidgetState extends State<PriorityWidget> {
   @override
   Widget build(BuildContext context) {
-    final tasksState = getIt<TasksState>();
+    final tasksState = Locator.tasksState;
     bool newTask = widget.id == null;
     return newTask
         ? Observer(
