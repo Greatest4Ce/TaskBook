@@ -27,10 +27,6 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextButton(
-              onPressed: () => throw Exception(),
-              child: const Text("Throw Test Exception"),
-            ),
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Column(
