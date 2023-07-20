@@ -24,7 +24,7 @@ class TaskInfoAppBar extends AppBar {
             actions: [
               TextButton(
                   style: TextButton.styleFrom(
-                    primary: LightColors.gray,
+                    foregroundColor: LightColors.gray,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(70),
                     ),

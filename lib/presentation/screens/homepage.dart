@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
-import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
-import 'package:to_do_list_new/main.dart';
 import 'package:to_do_list_new/presentation/features/task/newtask_widget.dart';
 import 'package:to_do_list_new/presentation/features/task/task_widget.dart';
 import 'package:to_do_list_new/presentation/features/task/visbility_button.dart';
@@ -18,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final TasksState tasksState = getIt<TasksState>();
+    final tasksState = Locator.tasksState;
     return Scaffold(
         floatingActionButton: FloatingActionButton(
             key: const Key("newTaskButton"),
@@ -96,6 +95,7 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
     final progress = shrinkOffset / maxExtent;
     return Container(
       decoration: BoxDecoration(
+        // ignore: deprecated_member_use
         color: Theme.of(context).backgroundColor,
         boxShadow: [
           BoxShadow(

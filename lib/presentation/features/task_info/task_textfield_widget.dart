@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:to_do_list_new/s.dart';
-import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
-
-import '../../../main.dart';
 
 class TaskTextField extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final id;
   const TaskTextField({Key? key, required this.id}) : super(key: key);
 
@@ -17,7 +16,7 @@ class _TaskTextFieldState extends State<TaskTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final TasksState tasksState = getIt<TasksState>();
+    final tasksState = Locator.tasksState;
     if (widget.id != null) {
       if (tasksState.tasks
               .singleWhere(

@@ -5,14 +5,13 @@ import 'package:to_do_list_new/data/revision/revision.dart';
 import 'package:to_do_list_new/data/server/interceptors/interceptros.dart';
 import 'package:to_do_list_new/data/server/models/models.dart';
 import 'package:to_do_list_new/domain/repository/locals_tasks_repository.dart';
-import 'package:to_do_list_new/internal/dependencies/repository_module.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:to_do_list_new/internal/logger/logger.dart';
 
 import '../requests/requests.dart';
 
 class TaskService {
-  LocalTasksRepository localTasksRepository =
-      RepositoryModule.localTasksRepository();
+  LocalTasksRepository localTasksRepository = Locator.localTasksRepository;
   static const _url = 'https://beta.mrdekk.ru/todobackend/list';
   final revision = RevisionProvider();
   final locRevision = LocalRevisionProvider();

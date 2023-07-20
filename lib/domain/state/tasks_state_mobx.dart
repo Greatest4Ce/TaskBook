@@ -3,10 +3,9 @@ import 'package:mobx/mobx.dart';
 import 'package:to_do_list_new/domain/repository/locals_tasks_repository.dart';
 import 'package:to_do_list_new/domain/repository/tasks_reporsitory.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
-import 'package:to_do_list_new/domain/state/connection_status.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../internal/dependencies/repository_module.dart';
 import '../models/task_model.dart';
 
 part 'tasks_state_mobx.g.dart';
@@ -14,13 +13,12 @@ part 'tasks_state_mobx.g.dart';
 class TasksState = TasksStateBase with _$TasksState;
 
 abstract class TasksStateBase with Store {
-  final TasksRepository tasksRepository = RepositoryModule.tasksRepository();
+  final TasksRepository tasksRepository = Locator.tasksRepository;
   final LocalTasksRepository localTasksRepository =
-      RepositoryModule.localTasksRepository();
-  final ConnectionStatus _connectionStatus = ConnectionStatus.getInstance();
+      Locator.localTasksRepository;
 
   @computed
-  bool get hasConnection => _connectionStatus.hasConnection;
+  bool get hasConnection => Locator.connectionStatus.hasConnection;
 
   // @computed
   // String? get deviceId => _getId();
@@ -172,12 +170,14 @@ abstract class TasksStateBase with Store {
     if (_tasks[_tasks.indexWhere((e) => e.id == id)].done == true) {
       doneCounter--;
     }
+    // _tasks.removeWhere((element) => element.id == id);
     if (hasConnection) {
       tasksRepository.deleteTask(id);
       localTasksRepository.localDeleteTask(id);
     } else {
       localTasksRepository.localDeleteTask(id);
     }
+    // getTasks();
   }
 
   // @action

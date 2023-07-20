@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_new/domain/routes/navigation_manager.dart';
-import 'package:to_do_list_new/domain/state/tasks_state_mobx.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:to_do_list_new/presentation/features/task_info/create_task_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/app_bar.dart';
 import 'package:to_do_list_new/s.dart';
-import '../../main.dart';
 
 class CreateTaskScreen extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final id;
   const CreateTaskScreen({Key? key, this.id}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final TasksState tasksState = getIt<TasksState>();
+    final tasksState = Locator.tasksState;
     bool newTask = tasksState.task.id == '';
     return Scaffold(
       appBar: TaskInfoAppBar(

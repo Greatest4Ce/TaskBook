@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_new/internal/dependencies/locator.dart';
 import 'package:to_do_list_new/s.dart';
 import 'package:to_do_list_new/presentation/features/task_info/deadline_widget.dart';
 import 'package:to_do_list_new/presentation/features/task_info/priority_widget.dart';
@@ -6,10 +7,8 @@ import 'package:to_do_list_new/presentation/features/task_info/task_textfield_wi
 import 'package:to_do_list_new/presentation/styles/custom_text_theme.dart';
 import 'package:to_do_list_new/presentation/styles/light_colors.dart';
 
-import '../../../domain/state/tasks_state_mobx.dart';
-import '../../../main.dart';
-
 class CreateTaskWidget extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final id;
   const CreateTaskWidget({Key? key, required this.id}) : super(key: key);
 
@@ -21,7 +20,7 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
   @override
   Widget build(BuildContext context) {
     bool newTask = widget.id == null ? true : false;
-    final tasksState = getIt<TasksState>();
+    final tasksState = Locator.tasksState;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -47,7 +46,7 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
               padding: const EdgeInsets.only(top: 20),
               child: TextButton.icon(
                   style: TextButton.styleFrom(
-                    primary:
+                    foregroundColor:
                         newTask ? LightColors.backPrimary : LightColors.red,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(70),
